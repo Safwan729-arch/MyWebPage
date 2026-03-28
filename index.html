@@ -209,6 +209,17 @@
     .fade-up-5 { animation-delay: 0.5s; }
     .fade-up-6 { animation-delay: 0.6s; }
 
+    /* ── Section glow pulse ── */
+    @keyframes sectionGlow {
+      0%   { filter: drop-shadow(0 0 0px rgba(94, 234, 212, 0)) brightness(1); }
+      12%  { filter: drop-shadow(0 0 20px rgba(94, 234, 212, 0.6)) brightness(1.2); }
+      100% { filter: drop-shadow(0 0 0px rgba(94, 234, 212, 0)) brightness(1); }
+    }
+
+    .section-glow-active {
+      animation: sectionGlow 0.9s ease-out forwards;
+    }
+
     /* ── Selection style ── */
     ::selection {
       background: rgba(94, 234, 212, 0.25);
@@ -708,7 +719,7 @@
       if (el) observer.observe(el);
     });
 
-    // ── Smooth nav click ──
+    // ── Smooth nav click + section glow ──
     // On desktop the right-col has 96px top padding, so #about sits at y=96.
     // "About" scrolls to 0 (natural page top). Other sections subtract 96px so
     // they visually align with the same depth in the viewport.
@@ -726,6 +737,14 @@
           const top    = target.getBoundingClientRect().top + window.scrollY - offset;
           window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
         }
+
+        // Glow the section element itself (avoids animation conflict with fade-up children)
+        target.classList.remove('section-glow-active');
+        void target.offsetWidth; // reflow to restart animation
+        target.classList.add('section-glow-active');
+        target.addEventListener('animationend', () => {
+          target.classList.remove('section-glow-active');
+        }, { once: true });
       });
     });
   </script>
