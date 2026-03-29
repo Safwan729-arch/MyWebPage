@@ -33,37 +33,7 @@
       margin: 0;
       color: var(--slate-text);
       line-height: 1.625;
-      cursor: none;
     }
-
-    /* ── Custom cursor ── */
-    #cursor {
-      pointer-events: none;
-      position: fixed;
-      width: 12px;
-      height: 12px;
-      background: var(--teal);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10000;
-      mix-blend-mode: difference;
-      transition: transform 0.08s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
-    }
-
-    #cursor-ring {
-      pointer-events: none;
-      position: fixed;
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(94, 234, 212, 0.4);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
-    }
-
-    body:has(a:hover) #cursor,
-    body:has(button:hover) #cursor { width: 20px; height: 20px; }
 
     /* ── Radial spotlight ── */
     #spotlight {
@@ -80,7 +50,6 @@
       align-items: center;
       gap: 12px;
       padding: 6px 0;
-      cursor: none;
       transition: color 0.2s ease;
       text-transform: uppercase;
       letter-spacing: 0.1em;
@@ -244,9 +213,7 @@
   <!-- Dark overlay so content stays readable -->
   <div style="position:fixed;inset:0;z-index:1;background:rgba(10,15,28,0.76);pointer-events:none;"></div>
 
-  <!-- Custom cursor -->
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
+
 
   <!-- Spotlight overlay -->
   <div id="spotlight"></div>
@@ -345,16 +312,18 @@
         <section id="about" class="mb-20 scroll-mt-20 lg:scroll-mt-0">
           <div class="section-label">About</div>
 
-          <div class="fade-up fade-up-2 space-y-4 text-base leading-relaxed" style="color: var(--slate-text);">
-            <p>
-              I'm a <span class="inline-link">computer science and engineering</span> student based in <span style="color: var(--white); font-weight: 600;">Dhaka, Bangladesh</span>, with a deep passion for the intersection of intelligence and technology. At 22, I'm constantly exploring how AI can reshape the way we build software and solve real-world problems.
-            </p>
-            <p>
-              My journey into tech started with curiosity — a drive to understand how machines can learn and reason. Today, that curiosity has evolved into a hands-on enthusiasm for <span style="color: var(--white); font-weight: 600;">artificial intelligence</span>, from understanding large language models to experimenting with machine learning pipelines.
-            </p>
-            <p>
-              Outside of code, I'm a dreamer with a plan. I believe in building something meaningful — a business that creates value — and achieving the kind of freedom that lets you live life on your own terms. When I'm not studying or building, you'll find me daydreaming about cobblestone streets in Lisbon or street food in Tokyo.
-            </p>
+          <div class="exp-card fade-up fade-up-2">
+            <div class="space-y-4 text-base leading-relaxed" style="color: var(--slate-text);">
+              <p>
+                I'm a <span class="inline-link">computer science and engineering</span> student based in <span style="color: var(--white); font-weight: 600;">Dhaka, Bangladesh</span>, with a deep passion for the intersection of intelligence and technology. At 22, I'm constantly exploring how AI can reshape the way we build software and solve real-world problems.
+              </p>
+              <p>
+                My journey into tech started with curiosity — a drive to understand how machines can learn and reason. Today, that curiosity has evolved into a hands-on enthusiasm for <span style="color: var(--white); font-weight: 600;">artificial intelligence</span>, from understanding large language models to experimenting with machine learning pipelines.
+              </p>
+              <p>
+                Outside of code, I'm a dreamer with a plan. I believe in building something meaningful — a business that creates value — and achieving the kind of freedom that lets you live life on your own terms. When I'm not studying or building, you'll find me daydreaming about cobblestone streets in Lisbon or street food in Tokyo.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -666,28 +635,6 @@
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
         requestAnimationFrame(render);
       })();
-    })();
-
-    // ── Cursor tracking ──
-    const cursor = document.getElementById('cursor');
-    const ring   = document.getElementById('cursor-ring');
-    let ringX = 0, ringY = 0;
-    let mouseX = 0, mouseY = 0;
-
-    document.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top  = mouseY + 'px';
-    });
-
-    // Lag ring
-    (function animateRing() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      ring.style.left = ringX + 'px';
-      ring.style.top  = ringY + 'px';
-      requestAnimationFrame(animateRing);
     })();
 
     // ── Spotlight glow ──
